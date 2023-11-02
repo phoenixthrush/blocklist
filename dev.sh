@@ -21,7 +21,7 @@ cat * > ../output/raw.txt
 cd ../output
 du -hs raw.txt
 
-cat raw.txt | sort --parallel --ignore-leading-blanks --ignore-nonprinting --ignore-case > sorted.txt
+sort --parallel --ignore-leading-blanks --ignore-nonprinting --ignore-case raw.txt > sorted.txt
 du -hs sorted.txt
 
 uniq --ignore-case --unique sorted.txt unique.txt
