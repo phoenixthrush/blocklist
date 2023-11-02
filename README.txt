@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d71b9a310b41f127feb800beeca2bbc46a2018bbd97ffc0d4c83d529a3503d60
-size 162
+everything.txt	processed hosts file
+sources.txt	list of hosts
+
+I recommend checking out anudeepND for a curated whitelist!
+https://github.com/anudeepND/whitelist
