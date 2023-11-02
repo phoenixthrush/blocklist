@@ -13,9 +13,9 @@ jobs:
       - name: Fix LFS sources.txt
         run: rm sources.txt; wget https://media.githubusercontent.com/media/phoenixthrush/blocklist/master/sources.txt
       - name: Build
-        run: chmod +x ./dev.sh
+        run: chmod +x ./dev.sh; tree
       - name: Process
-        run: bash ./dev.sh
+        run: bash ./dev.sh; tree
       - name: Test
         run: du -hs unique.txt
       - name: Release
