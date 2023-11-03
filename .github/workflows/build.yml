@@ -1,24 +1,24 @@
 name: Main
 
-on: push
-
+on:
+  push:
+  schedule:
+    - cron:  '0 0 * * SUN'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Prepare Git
+      - name: Git Clone
         run: git clone https://github.com/phoenixthrush/blocklist.git; cd blocklist
-      # - name: Fix LFS sources.txt
-      #  run: rm sources.txt; wget https://media.githubusercontent.com/media/phoenixthrush/blocklist/master/sources.txt
-      - name: Build
-        run: chmod +x ./dev.sh; tree
-      - name: Process
-        run: bash ./dev.sh; tree
-      - name: Test
-        run: du -hs unique.txt
-      - name: Release
+      - name: Make Executable
+        run: chmod +x ./dev.sh
+      - name: Run
+        run: bash ./dev.sh
+      - name: Test Log
+        run: du -hs unique.txt; tree ..
+      - name: Update Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
