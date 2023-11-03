@@ -10,8 +10,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Prepare Git
         run: git clone https://github.com/phoenixthrush/blocklist.git; cd blocklist
-      - name: Fix LFS sources.txt
-        run: rm sources.txt; wget https://media.githubusercontent.com/media/phoenixthrush/blocklist/master/sources.txt
+      # - name: Fix LFS sources.txt
+      #  run: rm sources.txt; wget https://media.githubusercontent.com/media/phoenixthrush/blocklist/master/sources.txt
       - name: Build
         run: chmod +x ./dev.sh; tree
       - name: Process
