@@ -3,7 +3,7 @@ name: Main
 on:
   push:
   schedule:
-    - cron:  '0 0 * * SUN'
+    - cron:  '0 0 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
