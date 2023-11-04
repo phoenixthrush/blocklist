@@ -21,10 +21,11 @@ cat * > ../output/raw.txt
 cd ../output
 du -hs raw.txt
 
-sort --ignore-leading-blanks --ignore-nonprinting --ignore-case raw.txt > sorted.txt
-du -hs sorted.txt
-
-uniq --ignore-case --unique sorted.txt unique.txt
+sort --ignore-leading-blanks --ignore-nonprinting --ignore-case --unique raw.txt > unique.txt
+#du -hs sorted.txt
 du -hs unique.txt
+
+# uniq --ignore-case --unique sorted.txt unique.txt
+# du -hs unique.txt
 
 cp unique.txt ..
