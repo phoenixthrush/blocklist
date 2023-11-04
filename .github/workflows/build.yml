@@ -10,14 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Git Clone
-        run: git clone https://github.com/phoenixthrush/blocklist.git; cd blocklist
-      - name: Make Executable
-        run: chmod +x ./dev.sh
       - name: Run
         run: bash ./dev.sh
       - name: Test Log
-        run: du -hs unique.txt; tree ..
+        run: du -hs ./output/raw.txt; du -hs unique.txt; tree ..
       - name: Update Release
         uses: softprops/action-gh-release@v1
         with:
