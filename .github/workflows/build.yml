@@ -17,5 +17,6 @@ jobs:
       - name: Update Release
         uses: softprops/action-gh-release@v1
         with:
+          name: ${{ github.event.repository.updated_at}}
           tag_name: ${{ github.ref_name }}
           files: unique.txt
