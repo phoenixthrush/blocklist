@@ -1,22 +1,29 @@
-name: Main
-
+name: Github Action with a cronjob trigger
 on:
-  push:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron: "0 0 * * *"
 jobs:
-  build:
+  main-job:
+    name: Main Job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Run
-        run: bash ./dev.sh
-      - name: Test Log
-        run: du -hs ./output/raw.txt; du -hs unique.txt; tree ..
+        uses: actions/checkout@v4
+      - name: Fetch
+        run: bash dev.sh
+      - name: Debug
+        run: du -hs output/raw.txt; du -hs unique.txt; tree ..
       - name: Update Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           name: ${{ steps.date.outputs.date }}
           tag_name: ${{ github.ref_name }}
           files: unique.txt
+  keepalive-job:
+    name: Keepalive Workflow
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2
