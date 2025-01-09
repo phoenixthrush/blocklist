@@ -1,29 +1,54 @@
 name: Github Action with a cronjob trigger
 on:
-  schedule:
-    - cron: "0 0 * * *"
+    schedule:
+        - cron: "0 0 * * *"
+    workflow_dispatch:
+
 jobs:
-  main-job:
-    name: Main Job
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Fetch
-        run: bash dev.sh
-      - name: Debug
-        run: du -hs output/raw.txt; du -hs unique.txt; tree ..
-      - name: Update Release
-        uses: softprops/action-gh-release@v2
-        with:
-          name: ${{ steps.date.outputs.date }}
-          tag_name: ${{ github.ref_name }}
-          files: unique.txt
-  keepalive-job:
-    name: Keepalive Workflow
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: gautamkrishnar/keepalive-workflow@v2
+    main-job:
+        name: Main Job
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.x"
+
+            - name: Install dependencies
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install requests tqdm
+
+            - name: Run the Python script
+              run: |
+                  python main.py
+
+            - name: Debug
+              run: |
+                  du -hs output/raw.txt
+                  du -hs output/unique.txt
+                  tree ..
+
+            - name: Update Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  name: ${{ steps.date.outputs.date }}
+                  tag_name: ${{ github.ref_name }}
+                  files: output/unique.txt
+
+    keepalive-job:
+        name: Keepalive Workflow
+        runs-on: ubuntu-latest
+        permissions:
+            actions: write
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Keep the workflow alive
+              uses: gautamkrishnar/keepalive-workflow@v2
