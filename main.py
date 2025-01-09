@@ -63,8 +63,10 @@ def clean_and_sort_raw(whitelist):
     with open('output/raw.txt', 'r', encoding='utf-8') as f:
         lines = sorted(set(line.strip().lower() for line in f.readlines() if line.strip().lower() not in whitelist))
 
+    # Prepend '0.0.0.0' to each line
     with open('output/unique.txt', 'w', encoding='utf-8') as f:
-        f.write("\n".join(lines))
+        for line in lines:
+            f.write(f"0.0.0.0 {line}\n")
 
 
 def main():
