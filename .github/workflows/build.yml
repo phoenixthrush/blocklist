@@ -27,10 +27,15 @@ jobs:
               run: |
                   python main.py
 
+            - name: Convert to AdGuard format
+              run: |
+                  awk '{print "|" $2 "^"}' output/unique.txt > output/adguard-filter.txt
+
             - name: Debug
               run: |
                   du -hs output/raw.txt
                   du -hs output/unique.txt
+                  du -hs output/adguard-filter.txt
                   tree ..
 
             - name: Update Release
@@ -38,7 +43,9 @@ jobs:
               with:
                   name: ${{ steps.date.outputs.date }}
                   tag_name: ${{ github.ref_name }}
-                  files: output/unique.txt
+                  files: |
+                      output/unique.txt
+                      output/adguard-filter.txt
 
     keepalive-job:
         name: Keepalive Workflow
