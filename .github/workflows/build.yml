@@ -46,16 +46,3 @@ jobs:
                   files: |
                       output/unique.txt
                       output/adguard-filter.txt
-
-    keepalive-job:
-        name: Keepalive Workflow
-        runs-on: ubuntu-latest
-        permissions:
-            actions: write
-
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-
-            - name: Keep the workflow alive
-              uses: gautamkrishnar/keepalive-workflow@v2
